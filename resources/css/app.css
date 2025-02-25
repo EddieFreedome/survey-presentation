@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+    font-family: "Junge", cursive;
+
+}
+
+/* pulsante scuro opt1 */
+
+/* li {
+    margin-bottom: 20px;
+    background-color: black ;
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 7px;
+} */
+
+
+/* pulsante chiaro opt2 */
+li {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 7px;
+    margin-bottom: 20px;
+    
+}
+/* .selected-li{
+    
+} */
+
+
+li.selected {
+    margin-bottom: 20px;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 7px;
+    position: relative;
+    
+}
+
+li:hover {
+    margin-bottom: 20px;
+    background-color: black;
+    color: aliceblue;
+    border-radius: 20px;
+    padding: 7px;
+    position: relative;
+}
+
+
+/* Checkmark */
+/* .mark-ok {
+    color: green;
+    border: 1px solid green;
+    font-size: 10px;
+    border-radius: 50%;
+    width: 13px;
+    background: #fff;
+    line-height: 10px;
+    font-weight: bold;
+    padding: 1px;
+    margin-right: 10px;
+} */
+
+/* TABLE */
+
+.row > th,td {
+    --tw-border-opacity: 1;
+    
+    border-color: rgb(71 85 105 / var(--tw-border-opacity));
+    border-width: 1px;
+    padding-right: 10rem;
+}
+
+/* CLASSI */
+
+.junge-regular {
+    font-family: "Junge", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.send-btn, .btn-dark {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    /* padding: 5px 20px; */
+    /* border: 3px solid black; */
+    border-radius: 20px;
+    border: 3px solid black;
+
+}
+
+.btn {
+    padding:7px 20px;
+}
+
+.btn-light {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    border-radius: 20px;
+}
+
+.btn:hover {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    border-radius: 20px;
+}
+
+/* #logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 180px; 
+} */
+
+html {
+    height: 100%;
+}
+
