@@ -51,7 +51,7 @@ class FrontController extends Controller
     {
         // dd($request->all());
         //TIMER
-        $time_answering = Carbon::now()->format('Y-m-d H:i:s.u');
+        $time_answering = Carbon::now()->format('Y-m-d H:i:s');
         
         // salvataggio risposte domanda
         //retrieve all points of answers for not querying everytime 
@@ -79,7 +79,7 @@ class FrontController extends Controller
             $savesession = new Savesession();
             $savesession->user_id = $user_id;
             $savesession->tot_points = $this->calculateTotPoints($user_id);
-            $savesession->tot_time_answering = Carbon::now()->format('Y-m-d H:i:s.u');;
+            $savesession->tot_time_answering = Carbon::now()->format('Y-m-d H:i:s');;
             // dd($savesession->tot_time_answering, $savesession);
             $savesession->save();
             // $session = Savesession::all();
@@ -161,7 +161,7 @@ class FrontController extends Controller
 
     //     if($start_time && $lastAnswer) {
     //         $totTimeAnswers = Carbon::parse($start_time)->diffAsCarbonInterval(Carbon::parse($lastAnswer->time_of_answering))->format('%H:%I:%S.%f');
-    //         $totTimeAnswers = Carbon::parse($totTimeAnswers)->subSeconds(160)->format('Y-m-d H:i:s.u');  
+    //         $totTimeAnswers = Carbon::parse($totTimeAnswers)->subSeconds(160)->format('Y-m-d H:i:s');  
     //         $totTimeAnswers = substr($totTimeAnswers, 0, -3);
     //     } else {
     //         $totTimeAnswers = 0;
@@ -187,10 +187,10 @@ class FrontController extends Controller
     
     //     // Itera attraverso le risposte dell'utente e i timestamp di inizio delle domande
     //     foreach ($savesessionlines as $key => $sessionline) {
-    //         $answerTimestamp = Carbon::createFromFormat('Y-m-d H:i:s.u', $sessionline->time_of_answering);
+    //         $answerTimestamp = Carbon::createFromFormat('Y-m-d H:i:s', $sessionline->time_of_answering);
     
     //         // Recupera il timestamp di inizio della domanda corrente
-    //         $questionStartTimestamp = Carbon::createFromFormat('Y-m-d H:i:s.u', $adminSessions[$key]);
+    //         $questionStartTimestamp = Carbon::createFromFormat('Y-m-d H:i:s', $adminSessions[$key]);
     
     //         // Calcola il tempo netto impiegato per rispondere a questa domanda
     //         $netTimeForThisAnswer = $answerTimestamp->diffInRealSeconds($questionStartTimestamp);
@@ -218,8 +218,8 @@ class FrontController extends Controller
             $i = 0;
             $i++;
 
-            $singleAnswerTime = Carbon::createFromFormat('Y-m-d H:i:s.u', $session->time_of_answering)
-            ->diffInMilliseconds(Carbon::createFromFormat('Y-m-d H:i:s.u', $T[$i-1][0]));
+            $singleAnswerTime = Carbon::createFromFormat('Y-m-d H:i:s', $session->time_of_answering)
+            ->diffInSeconds(Carbon::createFromFormat('Y-m-d H:i:s', $T[$i-1][0]));
             $singleAnswerTime;
         }
         // dd($tot_time);
@@ -236,10 +236,10 @@ class FrontController extends Controller
         // $adminSession = Adminsession::first();
 
         // $timestamps = [
-        //     Carbon::createFromFormat('Y-m-d H:i:s.u', $adminSession->start_time),
-        //     Carbon::createFromFormat('Y-m-d H:i:s.u', $adminSession->second_timestamps),
-        //     Carbon::createFromFormat('Y-m-d H:i:s.u', $adminSession->third_timestamps),
-        //     Carbon::createFromFormat('Y-m-d H:i:s.u', $adminSession->fourth_timestamps),
+        //     Carbon::createFromFormat('Y-m-d H:i:s', $adminSession->start_time),
+        //     Carbon::createFromFormat('Y-m-d H:i:s', $adminSession->second_timestamps),
+        //     Carbon::createFromFormat('Y-m-d H:i:s', $adminSession->third_timestamps),
+        //     Carbon::createFromFormat('Y-m-d H:i:s', $adminSession->fourth_timestamps),
         // ];
 
         // // Recupera tutte le risposte dell'utente ordinate per timestamp
@@ -249,7 +249,7 @@ class FrontController extends Controller
 
         // // Itera attraverso le risposte dell'utente e i timestamp di inizio delle domande
         // foreach ($savesessionlines as $key => $sessionline) {
-        //     $answerTimestamp = Carbon::createFromFormat('Y-m-d H:i:s.u', $sessionline->time_of_answering);
+        //     $answerTimestamp = Carbon::createFromFormat('Y-m-d H:i:s', $sessionline->time_of_answering);
 
         //     // Recupera il timestamp di inizio della domanda corrente
         //     $questionStartTimestamp = $timestamps[$key];
@@ -268,7 +268,7 @@ class FrontController extends Controller
     //     $totTimeAnswers = Savesessionline::where('user_id', $user_id)
     //                                 ->get()
     //                                 ->map(function ($item) {
-    //                                     return Carbon::parse($item->time_of_answering)->format('Y-m-d H:i:s.u');
+    //                                     return Carbon::parse($item->time_of_answering)->format('Y-m-d H:i:s');
     //                                 })
     //                                 ->implode(', ');
     //     dd($totTimeAnswers);  
