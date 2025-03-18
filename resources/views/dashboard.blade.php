@@ -11,7 +11,7 @@
         </div>
 
         <h1 class="text-2xl pb-8">Login effettuato correttamente!</h1>
-        <h1 class="text-2xl pb-8">Ciao {{ Auth::user()->name }}!</h1>
+        <h1 class="text-2xl pb-8">Ciao {{ session('name') }}!</h1>
         <h2 class="text-xl pb-8">Il quiz comincera' tra poco, stai pronto a partire!</h2>
 
         <livewire:clicker/>

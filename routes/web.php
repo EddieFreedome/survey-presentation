@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 //inutile specificarlo... va specificato il namespace alla dichiarazione della rotta del controller
 // use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\AuthMiddleware;
 use App\Livewire\Clicker;
 use App\Livewire\HiddenForm;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 // Livewire::routes();
 use App\Livewire\TokenLogin;
+use Doctrine\Common\Lexer\Token;
 
 // Route::get('/', function () {
 //     if (Auth::check()) {
@@ -25,12 +27,17 @@ use App\Livewire\TokenLogin;
 //     return view('admin');
 // }
 
-Route::get('/sign-in', TokenLogin::class)->name('sign-in');
+// Route::get('/sign-in', TokenLogin::class)->name('sign-in');
 // Route::get('/lobby', function () {
 //     return view('token-login');
 // })->middleware('auth.middleware')->name('lobby');
-// Route::get('/lobby', LobbyComponent::class)->middleware('autenticazione')->name('lobby');
+Route::get('/sign-in', [TokenLogin::class, 'render'])->name('sign-in');
 
+Route::group(['middleware' => AuthMiddleware::class], function () {
+    Route::get('/pre-lobby', function () {
+        return view('dashboard');
+    })->name('pre-lobby');
+});
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
