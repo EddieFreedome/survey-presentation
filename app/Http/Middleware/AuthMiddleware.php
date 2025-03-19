@@ -16,10 +16,20 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Session::has('token')) {
-            // Se il token di sessione non è presente, reindirizza l'utente alla pagina di login
-            return redirect()->route('sign-in');
+        $protectedRoutes = ['start', 'pre-lobby'];
+        
+        if (in_array($request->route()->getName(), $protectedRoutes)) {
+            if (!Session::has('token')) {
+                return redirect()->route('sign-in');
+            }
         }
+        
+        $name = Session::get('name');
+        if (!$name) {
+            $name = '';
+        }
+
+        Session::put('name', $name);
 
         // Se il token di sessione è presente, continua con la richiesta
         return $next($request);

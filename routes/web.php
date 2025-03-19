@@ -34,9 +34,10 @@ use Doctrine\Common\Lexer\Token;
 Route::get('/sign-in', [TokenLogin::class, 'render'])->name('sign-in');
 
 Route::group(['middleware' => AuthMiddleware::class], function () {
-    Route::get('/pre-lobby', function () {
-        return view('dashboard');
-    })->name('pre-lobby');
+    Route::get('/pre-lobby', [App\Http\Controllers\FrontController::class, 'preLobby'])->name('pre-lobby');
+    Route::get('/start', [App\Http\Controllers\FrontController::class, 'index'])->name('start');
+    Route::post('/nextstep', [App\Http\Controllers\FrontController::class, 'nextstep'])->name('nextstep');
+
 });
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,7 +52,6 @@ Route::group(['middleware' => AuthMiddleware::class], function () {
 // Route::middleware(['auth.middleware'])->group(function () {
 //     // Route::get('/dashboard', [App\Http\Controllers\FrontController::class, 'dashboard'])->name('dashboard');
 //     // Route::post('/nextstep', [App\Http\Controllers\FrontController::class, 'nextstep'])->name('nextstep');
-//     // Route::get('/start', [App\Http\Controllers\FrontController::class, 'index'])->name('start');
 //     Route::post('/nextstep', [HiddenForm::class, 'nextstep'])->name('nextstep');
 //     Route::get('/start', [HiddenForm::class, 'index'])->name('start');
 //     // Route::get('/clicker', [Clicker::class, 'redirectUserIfAdminsession'])->name('clicker');

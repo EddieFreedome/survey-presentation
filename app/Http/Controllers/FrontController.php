@@ -8,11 +8,13 @@ use App\Models\Answerquestion;
 use App\Models\Question;
 use App\Models\Savesession;
 use App\Models\Savesessionline;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Ramsey\Uuid\Type\Integer;
 
@@ -28,7 +30,10 @@ class FrontController extends Controller
     // public function dashboard() {
     //     return view('dashboard');
     // }
-
+    public function preLobby(){
+        $name = User::where('token', Session::get('token'))->first()->name;
+        return view('dashboard', compact('name'));
+    }
 
     public function index() {
         $questions = Question::all();

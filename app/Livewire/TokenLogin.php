@@ -11,14 +11,15 @@ class TokenLogin extends Component
 {
     public $name;
     public $token;
-
+    
 
     public function render()
     {
         if (!Session::has('token')) {
             return view('livewire.token-login');
         }
-        return redirect()->route('pre-lobby')->with('name', $this->name);
+        dd(Session::all());
+        return redirect()->view('dashboard');
     }
 
     public function submit() {
@@ -27,7 +28,8 @@ class TokenLogin extends Component
         $user->token = Str::random(32);
         $user->save();
 
-        Session::put('token', $user->token);
+        // Session::put('token', $user->token);
+        // Session::put('name', $user->name);
 
         return redirect()->route('pre-lobby');
     }
