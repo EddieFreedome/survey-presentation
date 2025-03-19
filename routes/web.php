@@ -12,32 +12,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 // Livewire::routes();
+
 use App\Livewire\TokenLogin;
-use Doctrine\Common\Lexer\Token;
+use App\Http\Controllers\PreLobbyController;
 
-// Route::get('/', function () {
-//     if (Auth::check()) {
-//         return view('dashboard');
-//     } else {
-//         return view('welcome');
-//     }
-// });
-
-// if (Auth::user() == 'admin') {
-//     return view('admin');
-// }
-
-// Route::get('/sign-in', TokenLogin::class)->name('sign-in');
-// Route::get('/lobby', function () {
-//     return view('token-login');
-// })->middleware('auth.middleware')->name('lobby');
-Route::get('/sign-in', [TokenLogin::class, 'render'])->name('sign-in');
+Route::get('/sign-in', TokenLogin::class)->name('sign-in');
 
 Route::group(['middleware' => AuthMiddleware::class], function () {
-    Route::get('/pre-lobby', function () {
-        return view('dashboard');
-    })->name('pre-lobby');
+    Route::get('/pre-lobby', [PreLobbyController::class, 'show'])->name('pre-lobby');
+    Route::get('/start', [App\Http\Controllers\FrontController::class, 'start'])->name('start');
+    Route::post('/nextstep', [App\Http\Controllers\FrontController::class, 'nextstep'])->name('nextstep');
+    Route::get('/clicker', [Clicker::class, 'redirectUserIfAdminsession'])->name('clicker');
+
 });
+
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

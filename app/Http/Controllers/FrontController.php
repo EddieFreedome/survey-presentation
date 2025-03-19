@@ -30,7 +30,7 @@ class FrontController extends Controller
     // }
 
 
-    public function index() {
+    public function start() {
         $questions = Question::all();
         $firstquestion = Question::where('is_start', 1)->first();
         // is it the first question?
