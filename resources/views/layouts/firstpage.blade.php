@@ -17,7 +17,7 @@
             <div class="body-container container mx-auto text-center p-20">
                 @livewire('timer-component')          
                 <h1 class="text-3xl pb-10"> {{ $question->title }} </h1>
-                <h2 class="text-2xl pb-10">{{ $question->description }}</h2>
+                {{-- <h2 class="text-2xl pb-10">{{ $question->description }}</h2> --}}
                 <section id="form-container">
                     @livewire('hidden-form', ['question' => $question, 'nextquestion' => $question->nextquestion_id, 'answers' => $question->answers])
                 </section>   

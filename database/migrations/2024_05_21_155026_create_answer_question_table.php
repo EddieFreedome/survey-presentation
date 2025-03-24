@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('answer_id');
-            $table->boolean('is_right');
+            // $table->boolean('is_right');
             $table->timestamps();
         });
 

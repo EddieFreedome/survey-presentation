@@ -11,7 +11,8 @@ class Answer extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $table="answers";
+    protected $table= "answers";
+    protected $fillable = ['text', 'points'];
 
     public function question(){
         //aggiunge campi aggiuntivi della pivot oltre gli id

@@ -9,6 +9,7 @@ class PreLobbyController extends Controller
 {
     public function show(Request $request)
     {
+        //dall'oggetto $user da logintoken mi arriva solo l'id (il primo valore). Andrebbe corretto ma per il momento uso questo
         $user = User::find($request->user);
         $name = $user->name;
         if (!$user) {

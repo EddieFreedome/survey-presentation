@@ -41,6 +41,7 @@ class TokenLogin extends Component
         $user = new User();
         $user->name = $this->name;
         $user->login_token = Str::random(32);
+        $user->ip_user = request()->ip();
         $user->save();
 
         Cookie::queue('login_token', $user->login_token, 60 * 2);
