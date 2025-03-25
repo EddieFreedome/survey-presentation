@@ -24,6 +24,23 @@ class HiddenForm extends Component
     public $answers;
     public $adminsession;
     public $selAnswers = [];
+    public $userId;
+    public function mount($userId)
+    {
+        dump($this->question);
+        $this->userId = $userId;
+    }
+
+    protected $listeners = [
+        'updateQuestions' => 'updateQuestionsHandler',
+    ];
+    
+    public function updateQuestionsHandler($newQuestion, $newAnswers)
+    {
+        dd($newQuestion, $newAnswers);
+        $this->question = $newQuestion;
+        $this->answers = $newAnswers;
+    }
     
     public function toggleSelection($value){
         if (in_array($value, $this->selAnswers)) {
@@ -34,42 +51,43 @@ class HiddenForm extends Component
     }
 
     
-    public function index() {
-        $questions = Question::all();
-        $firstquestion = Question::where('is_start', 1)->first();
-        // is it the first question?
-        $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
+    // public function index() {
+    //     $questions = Question::all();
+    //     $firstquestion = Question::where('is_start', 1)->first();
+    //     // is it the first question?
+    //     $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
 
-        if ($firstquestion) {
-            $question = $firstquestion;
-            $answers = $firstquestion->answers;
-            $nextquestion_id = $question->nextquestion_id;
-        } else {
-            return error('no question found');
-        }
-        return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id'));
-    }
+    //     if ($firstquestion) {
+    //         $question = $firstquestion;
+    //         $answers = $firstquestion->answers;
+    //         $nextquestion_id = $question->nextquestion_id;
+    //     } else {
+    //         return error('no question found');
+    //     }
+    //     return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id'));
+    // }
     
     public function nextstep()
     {
         $sel_answers = $this->selAnswers;
+        // dd('nextstep');
         // $selAnswers[]=$this->selAnswers;
         // dd($this->all());
         // salvataggio risposte domanda
         //retrieve all points of answers for not querying everytime 
         $arrPoints = Answerquestion::pluck('is_right', 'answer_id')->toArray();
-        $user_id = intval(Auth::user()->id);
+        $user_id = $this->userId;
         $question_id = intval($this->question->id);
         $question = Question::where('id', $question_id)->first();
 
         $nextquestion_id = $this->nextquestion;
         $nextquestion = Question::where('id', $nextquestion_id)->first();
-
+        // dd($nextquestion);
         $time_answering = Carbon::now()->format('Y-m-d H:i:s');
         $start_time = Carbon::parse(Adminsession::first()->start_time);
-        $second_time = Carbon::parse(Adminsession::skip(1)->take(1)->first()->start_time);
-        $third_time = Carbon::parse(Adminsession::skip(2)->take(1)->first()->start_time);
-        $fourth_time = Carbon::parse(Adminsession::skip(3)->take(1)->first()->start_time);
+        // $second_time = Carbon::parse(Adminsession::skip(1)->take(1)->first()->start_time);
+        // $third_time = Carbon::parse(Adminsession::skip(2)->take(1)->first()->start_time);
+        // $fourth_time = Carbon::parse(Adminsession::skip(3)->take(1)->first()->start_time);
         // dd($start_time, $second_time, $third_time, $fourth_time);
         // dd($start_time, Carbon::parse($start_time)->addSeconds(40)->format('Y-m-d H:i:s'));
         
@@ -101,12 +119,12 @@ class HiddenForm extends Component
         //         # code...
         //         break;
         // }
-        $waitingTime = 0;
-        if ($time_answering <= $second_time) {
-            $waitingTime = Carbon::parse($start_time)->diffInSeconds($time_answering);
-            dd($waitingTime);
-        }
-        dd('break');
+        // $waitingTime = 0;
+        // if ($time_answering <= $second_time) {
+        //     $waitingTime = Carbon::parse($start_time)->diffInSeconds($time_answering);
+        //     dd($waitingTime);
+        // }
+        // dd('break');
 
         // SPEZZARE LO STORE DAL RETURN VIEW: 
         // al submit del form viene chiamata la funzione savesessionline->pulsante submit disabled
@@ -126,13 +144,14 @@ class HiddenForm extends Component
 
         // salvataggio risposte domanda
         // $this->savesessionline($sel_answers, $arrPoints, $user_id, $question_id, $time_answering);
-
+            // dd($nextquestion);
         if($nextquestion != null) {
             // dd('nextquestion not null');
-            $answers = $nextquestion->answers;
-            $question = $nextquestion;
-            return view('layouts.firstpage', compact('question','answers'));
-        } else {
+            $this->answers = $nextquestion->answers;
+            $this->question = $nextquestion;
+            $this->dispatch('updateQuestions', $this->question, $this->answers);
+            } else {
+            dd('else hiddenform');
             // Calculate risultati sessione
             $savesession = new Savesession();
             $savesession->user_id = $user_id;
@@ -233,12 +252,6 @@ class HiddenForm extends Component
     //     $this->question = $question;
     //     $this->nextquestion = $nextquestion;
     // }
-
-    //Da' in pasto al controller livewire i dati
-    public function mount($question , $nextquestion, $answers) {
-
-
-    }
 
     public function render()
     {

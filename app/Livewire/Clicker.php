@@ -10,24 +10,29 @@ use Livewire\Component;
 
 class Clicker extends Component
 { 
+    public $userId;
+
+    public function mount($userId)
+    {
+        $this->userId = $userId;
+        // dd($userId);
+    }
+
     public function redirectUserIfAdminsession() {
         $adminsession = Adminsession::exists();
-        // dd($adminsession);
         if ($adminsession) {
-
-            $this->redirect(route('start'));
-            // return view('auth.login');
+            $this->redirect(route('start', ['userId' => $this->userId]));
         }
         
     }
 
-    public function pollingQuestionTime() {
-        $adminsession = Adminsession::first();
-        $start_time = Carbon::parse($adminsession->start_time);
-        $current_time = Carbon::now();
-        $diffInSeconds = $current_time->diffInSeconds($start_time);
-        return $diffInSeconds;
-    }
+    // public function pollingQuestionTime() {
+    //     $adminsession = Adminsession::first();
+    //     $start_time = Carbon::parse($adminsession->start_time);
+    //     $current_time = Carbon::now();
+    //     $diffInSeconds = $current_time->diffInSeconds($start_time);
+    //     return $diffInSeconds;
+    // }
 
     
     // public function adminStartQuiz() {

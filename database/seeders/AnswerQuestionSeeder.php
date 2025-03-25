@@ -18,7 +18,10 @@ class AnswerQuestionSeeder extends Seeder
         $answerIndex = 0;
         foreach ($questions as $question) {
 
-            $question->answers()->attach($answers->slice($answerIndex, 4));
+            $answersForQuestion = $answers->slice($answerIndex, 4);
+            foreach ($answersForQuestion as $answer) {
+                $question->answers()->attach($answer, ['is_right' => $answer->points]);
+            }
             $answerIndex += 4;
         }
     }

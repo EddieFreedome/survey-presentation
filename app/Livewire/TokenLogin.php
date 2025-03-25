@@ -33,9 +33,9 @@ class TokenLogin extends Component
 
     public function submit() {
         $this->validate([
-            'name' => 'required|string|unique:users,name|max:50'
+            'name' => 'required|string|max:50'
         ]);
-
+        dd($this->all());
         // Crea un nuovo utente con un token univoco
 
         $user = new User();

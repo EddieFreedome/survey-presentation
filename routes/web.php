@@ -16,15 +16,21 @@ use Livewire\Livewire;
 use App\Livewire\TokenLogin;
 use App\Http\Controllers\PreLobbyController;
 
-Route::get('/sign-in', TokenLogin::class)->name('sign-in');
+Route::get('/login', [PreLobbyController::class, 'loginView'])->name('login');
+Route::post('/register', [PreLobbyController::class, 'register'])->name('register');
+Route::get('/pre-lobby', [PreLobbyController::class, 'show'])->name('pre-lobby');
+// Route::group(['middleware' => AuthMiddleware::class], function () {
+// Route::middleware('auth')->group(function () {
 
-Route::group(['middleware' => AuthMiddleware::class], function () {
-    Route::get('/pre-lobby', [PreLobbyController::class, 'show'])->name('pre-lobby');
     Route::get('/start', [App\Http\Controllers\FrontController::class, 'start'])->name('start');
     Route::post('/nextstep', [App\Http\Controllers\FrontController::class, 'nextstep'])->name('nextstep');
     Route::get('/clicker', [Clicker::class, 'redirectUserIfAdminsession'])->name('clicker');
 
-});
+// });
+
+// Route::get('/login', function () {
+//     return view('auth.login');
+// })->name('login');
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,7 +38,7 @@ Route::group(['middleware' => AuthMiddleware::class], function () {
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-// Route::get('admin/dashboard', [HomeController::class,'index']);
+Route::get('admin/dashboard', [HomeController::class,'index']);
 
 
 // FrontController 

@@ -30,20 +30,26 @@ class FrontController extends Controller
     // }
 
 
-    public function start() {
+    public function start(Request $request) {
+        // dd($request->all());
+        $userId = $request->userId;
         $questions = Question::all();
         $firstquestion = Question::where('is_start', 1)->first();
+        // dd($firstquestion);
         // is it the first question?
-        $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
+        // $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
+
+        // passare $user_id!!!!
 
         if ($firstquestion) {
             $question = $firstquestion;
+            
             $answers = $firstquestion->answers;
             $nextquestion_id = $question->nextquestion_id;
         } else {
             return error('no question found');
         }
-        return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id'));
+        return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id', 'userId'));
     }
     
     // all'invio delle prime risposte, la view si riaggiornera' con la nuova domanda presa (nextquestion_id)

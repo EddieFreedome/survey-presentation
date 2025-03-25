@@ -72,14 +72,14 @@
         </div> --}}
               
         <div class="form-container text-center pt-28">
-            <form class="text-center" method="POST" action="{{ route('logout') }}">
+            {{-- <form class="text-center" method="POST" action="{{ route('logout') }}">
                 @csrf
                 <a href="{{ route('logout') }}"  onclick="event.preventDefault(); this.closest('form').submit();"
                     class="send-btn">
                     <strong>Log Out</strong>
                 </a>
                 
-            </form>
+            </form> --}}
             
         </div>
 

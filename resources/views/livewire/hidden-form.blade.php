@@ -1,15 +1,15 @@
 <div>
     {{-- The Master doesn't talk, he acts. --}}
     <form wire:submit.prevent="nextstep">
-        <input type="hidden" name="nextquestionId" value="{{ $question->nextquestion_id }}">                           
-        <input type="hidden" name="questionId" value="{{ $question->id }}">                           
+        <input type="hidden" name="nextquestionId" value="{{ $question['nextquestion_id'] }}">                           
+        <input type="hidden" name="questionId" value="{{ $question['id'] }}">                           
 
         @csrf
         <ul class="pb-10">
             @foreach ($answers as $answer)  
-                <li wire:click="toggleSelection( {{ $answer->id }} )" 
-                    class=" {{ in_array($answer->id, $selAnswers) ? 'selected' : '' }} answer answer-{{ $answer->id }}"id="answer.{{ $answer->id }}" data-answer-id="{{ $answer->id }}" value="{{ $answer->id }}">
-                    <strong> {{ $answer->text }} </strong>
+                <li wire:click="toggleSelection( {{ $answer['id'] }} )" 
+                    class=" {{ in_array($answer['id'], $selAnswers) ? 'selected' : '' }} answer answer-{{ $answer['id'] }}"id="answer.{{ $answer['id'] }}" data-answer-id="{{ $answer['id'] }}" value="{{ $answer['id'] }}">
+                    <strong> {{ $answer['text'] }} </strong>
                 </li>
             @endforeach            
             {{-- div di test con livewire --}}

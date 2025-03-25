@@ -32,5 +32,15 @@
                 {{ $slot }}
             </main>
         </div>
+        {{-- <script>
+            window.history.pushState(null, '', window.location.href);
+            window.onpopstate = function(event) {
+                if (confirm("Sei sicuro di voler tornare indietro?")) {
+                    window.history.go(-1);
+                } else {
+                    window.history.pushState(null, '', window.location.href);
+                }
+            };
+        </script> --}}
     </body>
 </html>

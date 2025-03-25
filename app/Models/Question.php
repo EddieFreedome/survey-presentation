@@ -14,6 +14,6 @@ class Question extends Model
     protected $table="questions";
 
     public function answers(){
-        return $this->belongsToMany(Answer::class)->withPivot('is_right');
+        return $this->belongsToMany(Answer::class);
     }
 }
