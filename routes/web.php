@@ -52,7 +52,10 @@ Route::get('admin/dashboard', [HomeController::class,'index']);
 // });
 
 /* crud:create add resource route */
-   
+
+Route::get('/finish', function () {
+    return view('finishpage');
+})->name('finish.page');
 
 
 // require __DIR__.'/auth.php';

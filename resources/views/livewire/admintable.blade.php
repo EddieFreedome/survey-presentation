@@ -12,22 +12,22 @@
 
             <tbody>      
                  
-                 @foreach ($results as $result )
+                 {{-- @foreach ($results as $result )
                     <tr class="row">
                         <td class="">{{ $result['username'] }}</td>
                         <td  class="">{{ $result['points'] }}</td>
                         <td  class="">{{ $result['tot_time_answering'] }}</td>
                     </tr>
-                @endforeach
+                @endforeach --}}
                 
                 
-                 @foreach($session as $user_session)
+                 {{-- @foreach($session as $user_session)
                     <tr class="row">
                         <td class="">{{ $results['name'] }}</td>
                         <td  class="">{{ $results['tot_points'] }}</td>
                         <td  class="">{{ $results['tot_time_answering'] }}</td>
                     </tr>
-                @endforeach     
+                @endforeach      --}}
              </tbody>
 
         </table>      

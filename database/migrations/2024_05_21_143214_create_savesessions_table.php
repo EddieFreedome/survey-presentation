@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('savesessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->time('tot_time_answering');
+            $table->integer('tot_time_answering');
             $table->integer('tot_points');
             $table->timestamps();
         });

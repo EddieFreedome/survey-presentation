@@ -51,23 +51,6 @@ class HiddenForm extends Component
             $this->selAnswers[] = $value;
         }
     }
-
-    
-    // public function index() {
-    //     $questions = Question::all();
-    //     $firstquestion = Question::where('is_start', 1)->first();
-    //     // is it the first question?
-    //     $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
-
-    //     if ($firstquestion) {
-    //         $question = $firstquestion;
-    //         $answers = $firstquestion->answers;
-    //         $nextquestion_id = $question->nextquestion_id;
-    //     } else {
-    //         return error('no question found');
-    //     }
-    //     return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id'));
-    // }
     
     public function nextstep()
     {
@@ -103,9 +86,11 @@ class HiddenForm extends Component
             $savesession->tot_points = $this->calculateTotPoints($user_id);
             // Store the total time answering as a valid TIME format (H:i:s)
             $savesession->tot_time_answering = $this->calculateTotTimeAnswering($user_id);
+            $savesession->tot_correct = $this->calculateTotCorrect($user_id);
+            $savesession->tot_wrong = $this->calculateTotWrong($user_id);
             $savesession->save();
             
-            return view('finishpage');        
+            return redirect()->route('finish.page');        
         }
     }
 
@@ -140,57 +125,45 @@ class HiddenForm extends Component
     }
 
     private function calculateTotTimeAnswering($user_id) {
-        // Recupera la sessione amministrativa per ottenere l'orario di inizio
+        // Recupera la sessione admin per ottenere l'orario di inizio
         $adminsession = Adminsession::first();
         $start_time = Carbon::parse($adminsession->start_time);
     
-        // Recupera tutte le risposte dell'utente ordinate per tempo di risposta
-        $answersUser = Savesessionline::where('user_id', $user_id)
-                        ->orderBy('time_of_answering', 'asc')
-                        ->get();
+        // Recupera l'ultima risposta dell'utente
+        $lastAnswer = Savesessionline::where('user_id', $user_id)
+                        ->orderBy('time_of_answering', 'desc')
+                        ->first();
 
-        // Se non ci sono risposte, restituisci 00:00:00
-        if ($answersUser->isEmpty()) {
-            return '00:00:00';
+        if (!$lastAnswer) {
+            return 0;
         }
     
-        // Calcola il tempo totale di attesa obbligatoria (3 intervalli di 40 secondi ciascuno)
-        $obligatoryWaitTime = 3 * 40; // 120 secondi
-    
-        // Calcola il tempo finale (T6)
-        $end_time = $start_time->copy()->addSeconds(160);
-    
-        // Calcola il tempo totale trascorso rispondendo alle domande
-        $totalTimeSpent = 0;
-        $prevTime = $start_time;
-    
-        foreach ($answersUser as $index => $answer) {
-            $currentAnswerTime = Carbon::parse($answer->time_of_answering);
-            $timeSpent = $currentAnswerTime->diffInSeconds($prevTime);
-    
-            if ($index < 3) {
-                // Sottrai i 40 secondi di attesa obbligatoria per le prime tre domande
-                $timeSpent -= $obligatoryWaitTime;
-            }
-    
-            $totalTimeSpent += $timeSpent;
-            $prevTime = $currentAnswerTime;
-        }
-    
-        // Calcola il tempo speso fino all'ultima risposta, considerando il tempo finale T6
-        $lastAnswerTime = Carbon::parse($answersUser->last()->time_of_answering);
-        if ($lastAnswerTime < $end_time) {
-            $totalTimeSpent += $lastAnswerTime->diffInSeconds($prevTime);
-        }
-    
-        // Calcolo del tempo totale sottraendo i 120 secondi di attesa obbligatoria
-        $totalTimeSpent = max(0, $totalTimeSpent); // Assicurarsi che il tempo non sia negativo
-        
-        // Genera un formato TIME valido (H:i:s) per la colonna tot_time_answering
-        // Questo formato è compatibile con il tipo TIME del database
-        $totTimeAnswers = gmdate('H:i:s', $totalTimeSpent);
-    
-        return $totTimeAnswers;
+        $lastAnswerTime = Carbon::parse($lastAnswer->time_of_answering);
+        $totalTimeSpent = $start_time->diffInSeconds($lastAnswerTime);        
+
+        return $totalTimeSpent;
+    }
+
+    private function calculateTotCorrect($user_id) {
+        return Savesessionline::join('answer_question', function($join) {
+            $join->on('savesessionlines.answer_id', '=', 'answer_question.answer_id')
+                 ->on('savesessionlines.question_id', '=', 'answer_question.question_id');
+        })
+        ->where('savesessionlines.user_id', $user_id)
+        ->where('answer_question.is_right', 1)
+        ->count();
+    }
+
+    private function calculateTotWrong($user_id) {
+        // Only consider lines where an answer was selected (answer_id is not null)
+        return Savesessionline::join('answer_question', function($join) {
+            $join->on('savesessionlines.answer_id', '=', 'answer_question.answer_id')
+                 ->on('savesessionlines.question_id', '=', 'answer_question.question_id');
+        })
+        ->where('savesessionlines.user_id', $user_id)
+        ->where('savesessionlines.answer_id', '!=', null)
+        ->where('answer_question.is_right', -1)
+        ->count();
     }
 
     public function render()
