@@ -19,13 +19,9 @@ class AdminClicker extends Component
         $start_time = Carbon::now();
 
         if (!$adminsession) {
-            for ($i = 0; $i < 4; $i++) {
-                $adminsession = new Adminsession();
-                $adminsession->start_time = $start_time->format('Y-m-d H:i:s');
-                $adminsession->save();
-
-                $start_time = $start_time->addSeconds(40);
-            }
+            $adminsession = new Adminsession();
+            $adminsession->start_time = $start_time->format('Y-m-d H:i:s');
+            $adminsession->save();
         }
     }
     public function resetQuiz(){
