@@ -33,13 +33,13 @@ class FrontController extends Controller
     public function start(Request $request) {
         // dd($request->all());
         $userId = $request->userId;
+        if (!$userId && Auth::check()) {
+            $userId = Auth::user()->id;
+        }
+        
         $questions = Question::all();
         $firstquestion = Question::where('is_start', 1)->first();
         // dd($firstquestion);
-        // is it the first question?
-        // $is_start = Savesessionline::where('question_id', $firstquestion->id)->where('user_id', Auth::user()->id)->exists();
-
-        // passare $user_id!!!!
 
         if ($firstquestion) {
             $question = $firstquestion;
@@ -64,7 +64,11 @@ class FrontController extends Controller
         $arrPoints = Answerquestion::pluck('is_right', 'answer_id')->toArray();
         $sel_answers = $request->selAnswers; //only IDs!
 
-        $user_id = intval(Auth::user()->id);
+        // Ensure consistent user_id handling
+        $user_id = $request->userId;
+        if (!$user_id && Auth::check()) {
+            $user_id = intval(Auth::user()->id);
+        }
 
         $question_id = intval($request->questionId);
         $question = Question::where('id', $question_id)->first();
@@ -79,18 +83,18 @@ class FrontController extends Controller
             // dd('nextquestion not null');
             $answers = $nextquestion->answers;
             $question = $nextquestion;
-            return view('layouts.firstpage', compact('question','answers'));
+            return view('layouts.firstpage', compact('question', 'answers', 'nextquestion_id', 'userId'));
         } else {
             // Calculate risultati sessione
             $savesession = new Savesession();
             $savesession->user_id = $user_id;
             $savesession->tot_points = $this->calculateTotPoints($user_id);
-            $savesession->tot_time_answering = Carbon::now()->format('Y-m-d H:i:s');;
-            // dd($savesession->tot_time_answering, $savesession);
+            // Store the total time answering as a valid TIME format (H:i:s)
+            $savesession->tot_time_answering = $this->calculateTotTimeAnswering($user_id);
             $savesession->save();
-            // $session = Savesession::all();
             
-            return view('finishpage');        
+            // Standardize finish flow with redirect
+            return redirect()->route('finish.page');        
         }
        
     }
@@ -144,6 +148,60 @@ class FrontController extends Controller
     private function calculateTotPoints($user_id) : int{
         $userAnswers = Savesessionline::where('user_id', $user_id)->sum('points');
         return $userAnswers;
+    }
+
+    private function calculateTotTimeAnswering($user_id) {
+        // Recupera la sessione amministrativa per ottenere l'orario di inizio
+        $adminsession = Adminsession::first();
+        $start_time = Carbon::parse($adminsession->start_time);
+    
+        // Recupera tutte le risposte dell'utente ordinate per tempo di risposta
+        $answersUser = Savesessionline::where('user_id', $user_id)
+                        ->orderBy('time_of_answering', 'asc')
+                        ->get();
+
+        // Se non ci sono risposte, restituisci 00:00:00
+        if ($answersUser->isEmpty()) {
+            return '00:00:00';
+        }
+    
+        // Calcola il tempo totale di attesa obbligatoria (3 intervalli di 40 secondi ciascuno)
+        $obligatoryWaitTime = 3 * 40; // 120 secondi
+    
+        // Calcola il tempo finale (T6)
+        $end_time = $start_time->copy()->addSeconds(160);
+    
+        // Calcola il tempo totale trascorso rispondendo alle domande
+        $totalTimeSpent = 0;
+        $prevTime = $start_time;
+    
+        foreach ($answersUser as $index => $answer) {
+            $currentAnswerTime = Carbon::parse($answer->time_of_answering);
+            $timeSpent = $currentAnswerTime->diffInSeconds($prevTime);
+    
+            if ($index < 3) {
+                // Sottrai i 40 secondi di attesa obbligatoria per le prime tre domande
+                $timeSpent -= $obligatoryWaitTime;
+            }
+    
+            $totalTimeSpent += $timeSpent;
+            $prevTime = $currentAnswerTime;
+        }
+    
+        // Calcola il tempo speso fino all'ultima risposta, considerando il tempo finale T6
+        $lastAnswerTime = Carbon::parse($answersUser->last()->time_of_answering);
+        if ($lastAnswerTime < $end_time) {
+            $totalTimeSpent += $lastAnswerTime->diffInSeconds($prevTime);
+        }
+    
+        // Calcolo del tempo totale sottraendo i 120 secondi di attesa obbligatoria
+        $totalTimeSpent = max(0, $totalTimeSpent); // Assicurarsi che il tempo non sia negativo
+        
+        // Genera un formato TIME valido (H:i:s) per la colonna tot_time_answering
+        // Questo formato è compatibile con il tipo TIME del database
+        $totTimeAnswers = gmdate('H:i:s', $totalTimeSpent);
+    
+        return $totTimeAnswers;
     }
 
     // private function calculateTotTimeAnswering($user_id){

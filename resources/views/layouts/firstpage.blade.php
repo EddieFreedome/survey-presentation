@@ -6,22 +6,25 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Quiz!</title>
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+        
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="junge-regular">
+    <body style="max-height: 100vh" class="flex flex-col bg-default">
         
         <section>
-            <div class="body-container container mx-auto text-center p-20">
+            <div class="body-container container mx-auto text-center p-16">
                 @livewire('timer-component')          
-                <h1 class="text-3xl pb-10"> {{ $question->title }} </h1>
-                {{-- <h2 class="text-2xl pb-10">{{ $question->description }}</h2> --}}
+                {{-- Question title is now managed by the Livewire component --}}
                 <section id="form-container">
-                    <div wire:poll>
-                        @livewire('hidden-form', ['question' => $question, 'nextquestion' => $question->nextquestion_id, 'answers' => $question->answers, 'userId' => $userId])
-                    </div>  
+                    @livewire('hidden-form', ['question' => $question, 'nextquestion' => $question->nextquestion_id, 'answers' => $question->answers, 'userId' => $userId])
                 </section>   
             </div>
         </section>

@@ -25,19 +25,21 @@ class HiddenForm extends Component
     public $adminsession;
     public $selAnswers = [];
     public $userId;
-    public function mount($userId)
+    public function mount($userId, $question = null, $nextquestion = null, $answers = null)
     {
-        dump($this->question);
         $this->userId = $userId;
+        $this->question = $question;
+        $this->nextquestion = $nextquestion;
+        $this->answers = $answers;
     }
 
     protected $listeners = [
         'updateQuestions' => 'updateQuestionsHandler',
+        'timerFinished'   => 'nextstep'
     ];
     
     public function updateQuestionsHandler($newQuestion, $newAnswers)
     {
-        dd($newQuestion, $newAnswers);
         $this->question = $newQuestion;
         $this->answers = $newAnswers;
     }
@@ -70,100 +72,41 @@ class HiddenForm extends Component
     public function nextstep()
     {
         $sel_answers = $this->selAnswers;
-        // dd('nextstep');
-        // $selAnswers[]=$this->selAnswers;
-        // dd($this->all());
-        // salvataggio risposte domanda
-        //retrieve all points of answers for not querying everytime 
+        // retrieve all points of answers for not querying everytime 
         $arrPoints = Answerquestion::pluck('is_right', 'answer_id')->toArray();
         $user_id = $this->userId;
         $question_id = intval($this->question->id);
-        $question = Question::where('id', $question_id)->first();
-
-        $nextquestion_id = $this->nextquestion;
-        $nextquestion = Question::where('id', $nextquestion_id)->first();
-        // dd($nextquestion);
         $time_answering = Carbon::now()->format('Y-m-d H:i:s');
-        $start_time = Carbon::parse(Adminsession::first()->start_time);
-        // $second_time = Carbon::parse(Adminsession::skip(1)->take(1)->first()->start_time);
-        // $third_time = Carbon::parse(Adminsession::skip(2)->take(1)->first()->start_time);
-        // $fourth_time = Carbon::parse(Adminsession::skip(3)->take(1)->first()->start_time);
-        // dd($start_time, $second_time, $third_time, $fourth_time);
-        // dd($start_time, Carbon::parse($start_time)->addSeconds(40)->format('Y-m-d H:i:s'));
+
+        // Save the current question's answers
+        $this->savesessionline($sel_answers, $arrPoints, $user_id, $question_id, $time_answering);
         
-        // switch (true) {
-        //     //se il tempo di risposta < 40, allora e' nella domanda successiva
-        //     case $time_answering <= Carbon::parse($start_time)->addSeconds(40):
-        //         #
-        //         $waitingTime = Carbon::parse($start_time)->diffInSeconds($time_answering);
-        //         dd($waitingTime);
-        //         dd('40');
-
-
-        //         break;
-
-        //     // < 80 && > 40
-        //     case $time_answering < Carbon::parse($start_time)->addSeconds(80) && $time_answering > Carbon::parse($start_time)->addSeconds(40):
-        //         $waitingTime = Carbon::parse($start_time)->diffInSeconds($time_answering);
-        //         dd($waitingTime, '80');
-        //         dd('80');
-                
-        //         break;
+        // Reset selected answers for the next question
+        $this->selAnswers = [];
+        
+        // Get the next question based on the stored nextquestion ID
+        $nextquestion = Question::where('id', $this->nextquestion)->first();
             
-        //     // < 120 && > 80
-        //     case $time_answering < Carbon::parse($start_time)->addSeconds(120) && $time_answering > Carbon::parse($start_time)->addSeconds(80):
-        //         dd('120');
-
-        //         break;
-        //     default:
-        //         # code...
-        //         break;
-        // }
-        // $waitingTime = 0;
-        // if ($time_answering <= $second_time) {
-        //     $waitingTime = Carbon::parse($start_time)->diffInSeconds($time_answering);
-        //     dd($waitingTime);
-        // }
-        // dd('break');
-
-        // SPEZZARE LO STORE DAL RETURN VIEW: 
-        // al submit del form viene chiamata la funzione savesessionline->pulsante submit disabled
-        // e il return della view viene chiamata al termine del timer
-
-
-
-
-
-
-        // $waitingTime = 40 - Carbon::parse($start_time)->diffInSeconds($time_answering);
-        // dd($waitingTime);
-        // $waitingTime = 40-Adminsession
-        // sleep($waitingTime);
-
-
-
-        // salvataggio risposte domanda
-        // $this->savesessionline($sel_answers, $arrPoints, $user_id, $question_id, $time_answering);
-            // dd($nextquestion);
-        if($nextquestion != null) {
-            // dd('nextquestion not null');
-            $this->answers = $nextquestion->answers;
+        if($nextquestion) {
+            // Update the current question with the next question
             $this->question = $nextquestion;
-            $this->dispatch('updateQuestions', $this->question, $this->answers);
-            } else {
-            dd('else hiddenform');
+            // Update the answers for the new question
+            $this->answers = $nextquestion->answers;
+            // Set the next question ID for the following step
+            $this->nextquestion = $nextquestion->nextquestion_id;
+            // Reset the timer for the new question
+            $this->dispatch('resetTimer');
+        } else {
             // Calculate risultati sessione
             $savesession = new Savesession();
-            $savesession->user_id = $user_id;
+            $savesession->user_id = $user_id; // Use the user_id passed from mount method
             $savesession->tot_points = $this->calculateTotPoints($user_id);
+            // Store the total time answering as a valid TIME format (H:i:s)
             $savesession->tot_time_answering = $this->calculateTotTimeAnswering($user_id);
-            // dd($savesession->tot_time_answering, $savesession);
             $savesession->save();
-            // $session = Savesession::all();
             
             return view('finishpage');        
         }
-
     }
 
     private function savesessionline($sel_answers, $arrPoints, $user_id, $question_id, $time_answering) {
@@ -206,6 +149,10 @@ class HiddenForm extends Component
                         ->orderBy('time_of_answering', 'asc')
                         ->get();
 
+        // Se non ci sono risposte, restituisci 00:00:00
+        if ($answersUser->isEmpty()) {
+            return '00:00:00';
+        }
     
         // Calcola il tempo totale di attesa obbligatoria (3 intervalli di 40 secondi ciascuno)
         $obligatoryWaitTime = 3 * 40; // 120 secondi
@@ -238,20 +185,13 @@ class HiddenForm extends Component
     
         // Calcolo del tempo totale sottraendo i 120 secondi di attesa obbligatoria
         $totalTimeSpent = max(0, $totalTimeSpent); // Assicurarsi che il tempo non sia negativo
-        $totTimeAnswers = gmdate('H:i:s.u', $totalTimeSpent);
-        dd($totTimeAnswers);
-        $totTimeAnswers = substr($totTimeAnswers, 0, -3);
-
+        
+        // Genera un formato TIME valido (H:i:s) per la colonna tot_time_answering
+        // Questo formato è compatibile con il tipo TIME del database
+        $totTimeAnswers = gmdate('H:i:s', $totalTimeSpent);
     
         return $totTimeAnswers;
     }
-
-    // seeting data in the component (maybe separated also from the view):
-    // public function mount($question, $nextquestion, $answers) {
-        
-    //     $this->question = $question;
-    //     $this->nextquestion = $nextquestion;
-    // }
 
     public function render()
     {

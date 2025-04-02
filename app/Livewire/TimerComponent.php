@@ -9,15 +9,22 @@ class TimerComponent extends Component
 {
     public $timeRemaining = 40;
     
+    protected $listeners = ['resetTimer' => 'resetTimer'];
+    
     public function decrementTime()
     {
-        
         if ($this->timeRemaining > 0) {
             $this->timeRemaining--;
-            // $this->emit('timeChanged', $this->timeRemaining);
         } else {
-            // $this->emit('timerEnded');
+            // When timer reaches 0, dispatch event so that HiddenForm handles nextstep
+            $this->dispatch('timerFinished');
+            $this->resetTimer();
         }
+    }
+    
+    public function resetTimer()
+    {
+        $this->timeRemaining = 40;
     }
 
     // public function mount()

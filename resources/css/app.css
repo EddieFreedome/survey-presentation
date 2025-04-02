@@ -80,10 +80,24 @@ li:hover {
 
 /* CLASSI */
 
-.junge-regular {
-    font-family: "Junge", cursive;
+.bg-default {
+    background-color: #06141B;
+} 
+
+.michroma-regular {
+    font-family: "Michroma", sans-serif;
     font-weight: 400;
     font-style: normal;
+}
+
+.nunito-sans-400 {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100,
+      "YTLC" 500;
 }
 
 .send-btn, .btn-dark {

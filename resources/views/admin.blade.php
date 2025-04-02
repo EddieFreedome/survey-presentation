@@ -15,7 +15,7 @@
     
     <title>Admin Dashboard!</title>
 </head>
-<body class="junge-regular">
+<body class="michroma-regular bg-default">
     
     <div class="body-container container mx-auto text-center p-20 h-full flex flex-col justify-center">
         {{-- @yield('content') --}}
