@@ -18,4 +18,12 @@ class Savesession extends Model
         'tot_correct' => 'integer',
         'tot_wrong' => 'integer',
     ];
+    
+    /**
+     * Get the user associated with the savesession.
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 }

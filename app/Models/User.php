@@ -47,4 +47,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the savesessionlines for the user.
+     */
+    public function savesessionlines()
+    {
+        return $this->hasMany(\App\Models\Savesessionline::class);
+    }
+
+    /**
+     * Get the savesession for the user.
+     */
+    public function savesession()
+    {
+        return $this->hasOne(\App\Models\Savesession::class);
+    }
 }

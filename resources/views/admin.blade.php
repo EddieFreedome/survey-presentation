@@ -21,55 +21,18 @@
         {{-- @yield('content') --}}
         <h1 class="text-3xl pb-5">Admin dashboard</h1>
 
-       <div class="table-container flex justify-center">
-        {{-- Tabella Livewire --}}
-        @livewire('admintable')
+       <div class="table-container flex justify-center flex-col ">
+        {{-- Progress Grid Component --}}
+        @livewire('admin-progress-grid')
 
+        {{-- Leaderboard Component --}}
+        <div class="mt-20">
+            @livewire('leaderboard')
+        </div>
+        {{-- Admin Clicker Component --}}
         @livewire('admin-clicker')
 
-        {{-- <table class="">
-                <thead>
-                    <tr class="row text-left ">
-                        <th  class="">Nome</th>
-                        <th  class="">Risposte corrette</th>
-                        <th  class="">Tempo di risposta</th>
-                    </tr>
-                    
-                </thead>
-
-                <tbody>
-                    <tr class="row">
-                        <td class="">Claudia Secchi</td>
-                        <td  class="">4</td>
-                        <td  class="">23 secondi e 21 millesimi</td>
-                        
-                    </tr>
-
-                    <tr class="row">
-                        <td class="">Viviana Damore</td>
-                        <td  class="">4</td>
-                        <td  class="">23 secondi e 21 millesimi</td>
-                        
-                    </tr>
-
-                    <tr class="row">
-                        <td class="">Camilla Giannelli</td>
-                        <td  class="">4</td>
-                        <td  class="">23 secondi e 21 millesimi</td>
-                        
-                    </tr>
-
-                    <tr class="row">
-                        <td class="">Alessandro Cerati</td>
-                        <td  class="">4</td>
-                        <td  class="">23 secondi e 21 millesimi</td>
-                    </tr>
-                    
-                </tbody>
-
-            </table>      
-       
-        </div> --}}
+        </div>
               
         <div class="form-container text-center pt-28">
             {{-- <form class="text-center" method="POST" action="{{ route('logout') }}">
