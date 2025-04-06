@@ -7,30 +7,39 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Junge&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Nunito+Sans:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     
     <title>Admin Dashboard!</title>
+    <style>
+        .admin-card {
+            background-color: #121212;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body class="michroma-regular bg-default">
+<body class="michroma-regular bg-black text-gray-200">
     
     <div class="body-container container mx-auto text-center p-20 h-full flex flex-col justify-center">
         {{-- @yield('content') --}}
-        <h1 class="text-3xl pb-5">Admin dashboard</h1>
+        <h1 class="text-3xl pb-5 text-white">Admin dashboard</h1>
 
-       <div class="table-container flex justify-center flex-col ">
+       <div class="table-container flex justify-center flex-col admin-card p-6">
         {{-- Progress Grid Component --}}
         @livewire('admin-progress-grid')
 
         {{-- Leaderboard Component --}}
-        <div class="mt-20">
+        <div class="mt-20 admin-card p-4">
             @livewire('leaderboard')
         </div>
         {{-- Admin Clicker Component --}}
-        @livewire('admin-clicker')
+        <div class="mt-8 admin-card p-4">
+            @livewire('admin-clicker')
+        </div>
 
         </div>
               
