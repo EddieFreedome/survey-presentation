@@ -1,4 +1,5 @@
-<div class="flex flex-col bg-gray-900 rounded-lg p-6 text-gray-200 max-h-screen">
+            </a>
+<div class="cyber-container flex flex-col rounded-lg p-6 text-gray-200 max-h-screen">
     <h1 class="text-2xl pb-8 michroma-regular text-gray-200">#{{ $question->id}} <br> {{ $question->title }}</h1>
     <form wire:submit.prevent="nextstep">
         <input type="hidden" name="nextquestionId" value="{{ $question->nextquestion_id }}">                           

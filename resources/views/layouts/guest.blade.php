@@ -27,9 +27,9 @@
                 100% { transform: scale(1); opacity: 0.5; }
             }
             @keyframes pulse {
-                0% { box-shadow: 0 0 5px rgba(6, 182, 212, 0.5); }
-                50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.8), 0 0 30px rgba(6, 182, 212, 0.6); }
-                100% { box-shadow: 0 0 5px rgba(6, 182, 212, 0.5); }
+                0% { box-shadow: 0 0 5px #e2e8f5; }
+                50% { box-shadow: 0 0 20px #e2e8f88b, 0 0 30px #e2e8f682 }
+                100% { box-shadow: 0 0 5px #e2e8f5 }
             }
             @keyframes gradientBG {
                 0% { background-position: 0% 50%; }
@@ -57,34 +57,34 @@
             }
             .cyber-container {
                 background: rgba(17, 24, 39, 0.7);
-                border: 1px solid rgba(6, 182, 212, 0.5);
+                border: 1px solid #e2e8f0;
                 border-radius: 8px;
-                box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+                box-shadow: 0 0 15px #e2e8f3c5;
                 animation: pulse 3s infinite;
                 backdrop-filter: blur(5px);
             }
             .cyber-gradient {
-                background: linear-gradient(45deg, #06b6d4, #8b5cf6, #ec4899);
+                background: linear-gradient(45deg, #e2e8f0, #e2e8f094, #e2e8f040);
                 background-size: 200% 200%;
                 animation: gradientBG 10s ease infinite;
             }
             .cyber-text {
                 color: #e2e8f0;
-                text-shadow: 0 0 5px rgba(6, 182, 212, 0.7);
+                text-shadow: 0 0 5px #e2e8f0;
             }
             .cyber-input {
                 background: rgba(30, 41, 59, 0.8);
-                border: 1px solid rgba(6, 182, 212, 0.3);
+                border: 1px solid #e2e8f3;
                 color: #e2e8f0;
                 transition: all 0.3s ease;
             }
             .cyber-input:focus {
-                border-color: #06b6d4;
-                box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.25);
+                border-color: #e2e8f0;
+                box-shadow: 0 0 0 2px #e2e8f3;
                 outline: none;
             }
             .cyber-button {
-                background: linear-gradient(45deg, #06b6d4, #3b82f6);
+                background: linear-gradient(45deg, #f2f2f2, #e2e8f0);
                 color: white;
                 border: none;
                 padding: 0.5rem 1.5rem;
@@ -97,7 +97,7 @@
             }
             .cyber-button:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+                box-shadow: 0 0 15px white;
             }
             .cyber-button:active {
                 transform: translateY(0);
@@ -128,14 +128,12 @@
         
         <div class="h-screen flex flex-col justify-center items-center py-4 px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="mb-4 transform hover:scale-105 transition-transform duration-300">
-                {{-- <div class="container mx-auto flex justify-center"> --}}
                     <a href="https://bitflow.it">
                         <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" class=" w-full pt-28" alt="Bitflow logo">
                     </a>
-                {{-- </div>             --}}
             </div>
 
-            <div class="cyber-container w-full sm:max-w-lg px-6 py-6 mb-4">
+            <div class="cyber-container w-full sm:max-w-lg px-6 py-6 mb-4 michroma-regular">
                 {{ $slot }}
             </div>
         </div>

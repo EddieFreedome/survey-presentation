@@ -39,9 +39,9 @@
                 position: absolute;
                 width: 8px;
                 height: 8px;
-                background-color: rgba(200, 230, 255, 0.5);
+                background-color: rgba(255, 255, 255, 0.5);
                 border-radius: 50%;
-                box-shadow: 0 0 4px rgba(200, 230, 255, 0.6);
+                box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
                 animation: float 3s ease-in-out infinite, twinkle 2s ease-in-out infinite;
             }
             /* Container to hold the floating stars in the background */
@@ -54,6 +54,49 @@
                 pointer-events: none;
                 overflow: hidden;
                 z-index: 0;
+            }
+            
+            /* Cyber design with white accents */
+            .cyber-container {
+                /* background: rgb(17, 24, 39); */
+                border: 1px solid rgba(255,255,255,0.5);
+                border-radius: 8px;
+                box-shadow: 0 0 15px rgba(255,255,255,0.3);
+                animation: pulse 3s infinite;
+                backdrop-filter: blur(5px);
+            }
+
+            @keyframes pulse {
+                0% { box-shadow: 0 0 5px rgba(255,255,255,0.5); }
+                50% { box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.6); }
+                100% { box-shadow: 0 0 5px rgba(255,255,255,0.5); }
+            }
+
+            .cyber-text {
+                color: #ffffff;
+                text-shadow: 0 0 5px rgba(255,255,255,0.7);
+            }
+
+            .cyber-button {
+                background: linear-gradient(45deg, #ffffff, #f0f0f0);
+                color: #111827;
+                border: none;
+                padding: 0.5rem 1.5rem;
+                border-radius: 4px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .cyber-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            }
+
+            .cyber-button:active {
+                transform: translateY(0);
             }
         </style>
         
@@ -76,7 +119,7 @@
         </div>
         
         <section>
-            <div class="body-container container mx-auto text-center p-10 sm:p-8 md:p-10 fade-in rounded-lg relative z-10">
+            <div class="container mx-auto text-center p-8 sm:p-8 md:p-10 fade-in relative z-10">
                 @livewire('timer-component')          
                 {{-- Question title is now managed by the Livewire component --}}
                 <section id="form-container">

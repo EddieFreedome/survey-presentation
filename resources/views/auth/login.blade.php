@@ -4,52 +4,52 @@
 
     <div class="w-full max-w-md px-6 py-4 mx-auto">
             <div class="text-center mb-6">
-                <h1 class="text-3xl font-bold text-cyan-400 mb-2">ACCESS PORTAL</h1>
-                <p class="text-gray-400">Enter your name to continue</p>
+                <h1 class="text-2xl font-normal text-white mb-2">ACCESSO QUIZ</h1>
+                <p class="text-gray-400">Inserisci un nome univoco per continuare</p>
             </div>
 
-            <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-lg border border-cyan-800/50 shadow-lg shadow-cyan-900/20">
+            <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-lg border border-white/50 shadow-lg shadow-white/20">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
                     <!-- name -->
                     <div class="mb-6">
-                        <label for="name" class="block text-sm font-medium text-cyan-400 mb-2">{{ __('name') }}</label>
+                        <label for="name" class="block text-sm font-medium text-white mb-2">{{ __('Nome') }}</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                                 <i class="fa-solid fa-user text-gray-500"></i>
                             </span>
                             <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus 
-                                class="w-full pl-5 pr-3 py-2 bg-gray-800/80 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-gray-200 placeholder-gray-500"
+                                class="w-full pl-5 pr-3 py-2 bg-gray-800/80 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-gray-200 placeholder-gray-500"
                                 placeholder="Enter your name">
                         </div>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     <!-- Remember Me -->
-                    <div class="flex items-center mb-6">
+                    {{-- <div class="flex items-center mb-6">
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox" 
-                                class="rounded border-gray-700 bg-gray-800 text-cyan-600 shadow-sm focus:ring-cyan-500 focus:ring-opacity-50" 
+                                class="rounded border-gray-700 bg-gray-800 text-black shadow-sm focus:ring-white focus:ring-opacity-50" 
                                 name="remember">
                             <span class="ml-2 text-sm text-gray-300">{{ __('Remember me') }}</span>
                         </label>
-                    </div>
+                    </div> --}}
 
                     <div class="flex flex-col space-y-4">
                         <button type="submit" 
-                            class="w-full py-2 px-4 bg-gradient-to-r from-cyan-800 to-cyan-600 hover:from-cyan-700 hover:to-cyan-500 text-white font-bold rounded-md shadow-lg shadow-cyan-900/30 transition-all duration-200 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
+                            class="w-full py-2 px-4 bg-gradient-to-r from-black to-grey-400 hover:from-cyan-700 hover:to-cyan-500 text-white font-bold rounded-md shadow-lg shadow-white/10 transition-all duration-200 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
                             {{ __('ACCESS SYSTEM') }}
                         </button>
                         
-                        @if (Route::has('register'))
+                        {{-- @if (Route::has('register'))
                             <div class="text-center text-sm text-gray-400">
                                 {{ __('Don\'t have an account?') }} 
-                                <a href="{{ route('register') }}" class="text-cyan-400 hover:text-cyan-300 transition-colors">
+                                <a href="{{ route('register') }}" class="text-white hover:text-cyan-300 transition-colors">
                                     {{ __('Register') }}
                                 </a>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </form>
             </div>
