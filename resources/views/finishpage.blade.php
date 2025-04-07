@@ -16,35 +16,56 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
-     .neon-text {
-       color: #e0faff;
-       text-shadow: 0 0 5px #e0faff, 0 0 10px #e0faff, 0 0 20px rgba(0,255,255,0.4), 0 0 30px rgba(0,255,255,0.3);
-       animation: pulse 1.5s ease-in-out infinite alternate;
-     }
-   
-     @keyframes pulse {
-       from { opacity: 0.8; }
-       to { opacity: 1; }
-     }
-   
-     /* Optional glowing container */
-     .glow-container {
-       border: 1px solid rgba(255,255,255,0.2);
-       padding: 2rem;
-       border-radius: 8px;
-       box-shadow: 0 0 10px rgba(0,255,255,0.2);
-     }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.7; }
+            50% { transform: translateY(-10px); opacity: 1; }
+            100% { transform: translateY(0); opacity: 0.7; }
+        }
+        
+        @keyframes twinkle {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        
+        .floating-star {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(200, 230, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(200,230,255,0.6);
+            animation: float 3s ease-in-out infinite, twinkle 2s ease-in-out infinite;
+        }
+        
+        .floating-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
     </style>
 </head>
 <body class="michroma-regular bg-black">
-    <div class="body-container container mx-auto text-center p-10 min-h-screen flex flex-col items-center justify-center">
-        <div class="glow-container">
-        <div class="img-container">
-            <img src="{{ asset('storage/LOGO_CLAUDIA_SECCHI.jpg')}}" alt="logo claudia secchi">
+    <div class="floating-stars">
+        <div class="floating-star" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+        <div class="floating-star" style="top: 40%; left: 70%; animation-delay: 1s;"></div>
+        <div class="floating-star" style="top: 75%; left: 15%; animation-delay: 0.5s;"></div>
+        <div class="floating-star" style="top: 20%; left: 80%; animation-delay: 1.5s;"></div>
+        <div class="floating-star" style="top: 60%; left: 50%; animation-delay: 0.8s;"></div>
+    </div>
+    <div class="body-container container mx-auto text-center py-16 px-10 min-h-screen flex flex-col items-center justify-center">
+        <div class="container mx-auto flex justify-center">
+            <a href="https://bitflow.it">
+                <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" class=" w-full pt-28" alt="Bitflow logo">
+            </a>
         </div>
-        <h1 class="text-4xl pb-10 neon-text">Grazie per aver risposto al questionario!</h1>
-        <h2 class="text-xl neon-text">Torneremo presto con i risultati, nel frattempo continua a goderti la presentazione ;)</h2>
-        </div>
+        <h1 class="text-4xl pb-10 mt-10 mb-10 text-[#e0faff]">Grazie per aver risposto al questionario!</h1>
+        <h2 class="text-xl text-[#e0faff]">Torneremo presto con i risultati, nel frattempo continua a goderti la presentazione ;)</h2>
     </div>
 </body>
 </html>

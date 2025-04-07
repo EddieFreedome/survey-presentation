@@ -842,9 +842,8 @@
 <body class="flex h-full items-center">
     <div class="body-container container mx-auto text-center px-10 ">
         {{-- non loggato --}}
-        <div class="img-container flex h-auto justify-center px-20">
-            <img id="logo" class="inline-block" src="{{ asset('storage/LOGO_CLAUDIA_SECCHI.jpg') }}"
-                alt="">
+        <div class="img-container flex h-auto justify-center px-4">
+            <x-bitflow-logo />
         </div>
 
     

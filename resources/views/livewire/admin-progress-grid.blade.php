@@ -1,4 +1,4 @@
-<div class="p-4" wire:poll.3s>
+<div class="p-4" wire:poll.2s>
     <h2 class="text-2xl mb-4 text-white">Progress Tracking</h2>
     <div class="overflow-x-auto overflow-y-auto max-h-screen rounded-lg shadow-lg">
         <table class="min-w-full bg-gray-900 border border-gray-700 rounded-lg">
