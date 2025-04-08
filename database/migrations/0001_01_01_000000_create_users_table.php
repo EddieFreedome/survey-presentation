@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('password')->nullable();
-            $table->ipAddress('ip_user')->nullable()->unique();
+            $table->ipAddress('ip_user')->nullable();
             $table->string('login_token')->nullable()->unique();
             $table->string('email')->unique()->nullable();
             $table->boolean('is_admin')->nullable();

@@ -11,7 +11,7 @@
             </div>
 
             <div class=" p-8  shadow-white/20">
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
 
                     <!-- name -->
