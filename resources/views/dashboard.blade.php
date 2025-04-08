@@ -77,10 +77,8 @@
     </div>
     
     <header class="w-full">
-        <div class="container mx-auto flex justify-center">
-            <a href="https://bitflow.it">
+        <div class="container mx-auto flex justify-center px-10">
                 <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
-            </a>
         </div>
     </header>
     

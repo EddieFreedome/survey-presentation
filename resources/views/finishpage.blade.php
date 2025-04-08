@@ -93,13 +93,16 @@
         <div class="floating-star" style="top: 60%; left: 50%; animation-delay: 0.8s;"></div>
     </div>
     <div class="cyber-container body-container container mx-auto text-center py-16 px-10 min-h-screen flex flex-col items-center justify-center">
-        <div class="container mx-auto flex justify-center">
+        <div class="container mx-auto flex justify-center pb-12">
             <a href="https://bitflow.it">
                 <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
             </a>
         </div>
-        <h1 class="text-4xl pb-10 mt-10 mb-10 text-white">Grazie per aver risposto al questionario!</h1>
-        <h2 class="text-xl text-white">Torneremo presto con i risultati, nel frattempo continua a goderti la presentazione ;)</h2>
+        <div class="cyber-container">
+
+            <h1 class="text-4xl pb-10 mt-10 mb-10 text-white">Grazie per aver risposto al questionario!</h1>
+            <h2 class="text-xl text-white">Torneremo presto con i risultati, nel frattempo continua a goderti la presentazione ;)</h2>
+        </div>
     </div>
 </body>
 </html>
