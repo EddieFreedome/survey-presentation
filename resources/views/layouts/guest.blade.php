@@ -7,7 +7,7 @@
         
         <link rel="icon" href="{{ asset('favicon.ico') }}">
         
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Bitflow Quiz') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +56,7 @@
                 z-index: 0;
             }
             .cyber-container {
-                background: rgba(17, 24, 39, 0.7);
+                /* background: rgba(17, 24, 39, 0.7); */
                 border: 1px solid #e2e8f0;
                 border-radius: 8px;
                 box-shadow: 0 0 15px #e2e8f3c5;
@@ -128,9 +128,7 @@
         
         <div class="h-screen flex flex-col justify-center items-center py-4 px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="mb-4 transform hover:scale-105 transition-transform duration-300">
-                    <a href="https://bitflow.it">
-                        <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" class=" w-full pt-28" alt="Bitflow logo">
-                    </a>
+                <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28 pb-10" alt="Bitflow logo">
             </div>
 
             <div class="cyber-container w-full sm:max-w-lg px-6 py-6 mb-4 michroma-regular">

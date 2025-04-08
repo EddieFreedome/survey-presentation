@@ -105,7 +105,7 @@
     <body style="max-height: 100vh" class="flex flex-col bg-black text-gray-200 relative">
         <header class="py-4">
             <div class="container mx-auto flex justify-center">
-                <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" alt="Bitflow logo" class="w-32 h-auto">
+                <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" alt="Bitflow logo" class="w-32 h-auto">
 
             </div>
         </header>

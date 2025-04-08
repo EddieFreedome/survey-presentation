@@ -28,6 +28,12 @@
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); opacity: 0.5; }
         }
+
+        @keyframes pulse {
+                0% { box-shadow: 0 0 5px #e2e8f5; }
+                50% { box-shadow: 0 0 20px #e2e8f88b, 0 0 30px #e2e8f682 }
+                100% { box-shadow: 0 0 5px #e2e8f5 }
+            }
         .floating-star {
             position: absolute;
             width: 8px;
@@ -47,6 +53,14 @@
             overflow: hidden;
             z-index: 0;
         }
+
+        .cyber-container {
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                box-shadow: 0 0 15px #e2e8f3c5;
+                animation: pulse 3s infinite;
+                backdrop-filter: blur(5px);
+        }
     </style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
@@ -65,7 +79,7 @@
     <header class="w-full">
         <div class="container mx-auto flex justify-center">
             <a href="https://bitflow.it">
-                <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" class=" w-full pt-28" alt="Bitflow logo">
+                <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
             </a>
         </div>
     </header>
@@ -73,17 +87,18 @@
     <div class="container mx-auto text-center">
     </div>
     <div class="body-container container mx-auto text-center flex-grow flex flex-col justify-start items-center relative z-10 fade-in p-4 sm:p-8 md:p-10 my-10">
-        <div class="max-w-2xl mx-auto p-6 rounded-lg border border-gray-700">
-            <h1 class="text-2xl pb-4 sm:pb-6">Ciao {{ $name }}!</h1>
+        <div class="max-w-2xl cyber-container mx-auto p-6 rounded-lg border border-gray-700">
+            <h1 class="text-2xl pb-8 sm:pb-6">Ciao {{ $name }}!</h1>
             <h2 class="text-xl pb-4 sm:pb-6">Il quiz comincera' tra poco, stai pronto a partire!</h2>
-            
+            <hr class="border-gray-700 my-4">
+            <h1 class="text-lg pb-4 sm:pb-6 pt-5">Ingresso effettuato correttamente!</h1>
+
             <div class="mt-2">
                 @livewire('clicker', ['userId' => $userId])
             </div>
         </div>
         {{-- <div class="max-w-2xl mx-auto p-6 rounded-lg border border-gray-700">
         </div> --}}
-        <h1 class="text-lg pb-4 sm:pb-6 pt-10">Ingresso effettuato correttamente!</h1>
 
     </div>
 {{-- 

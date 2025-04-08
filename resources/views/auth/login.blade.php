@@ -3,12 +3,14 @@
     {{-- <x-auth-session-status class="mb-4" :status="session('status')" /> --}}
 
     <div class="w-full max-w-md px-6 py-4 mx-auto">
+        <div class="py-15 px-15">
+
             <div class="text-center mb-6">
-                <h1 class="text-2xl font-normal text-white mb-2">ACCESSO QUIZ</h1>
+                <h1 class="text-2xl font-normal text-white mb-2">ACCEDI AL QUIZ</h1>
                 <p class="text-gray-400">Inserisci un nome univoco per continuare</p>
             </div>
 
-            <div class="bg-gray-900/80 backdrop-blur-sm p-8 rounded-lg border border-white/50 shadow-lg shadow-white/20">
+            <div class=" p-8  shadow-white/20">
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
@@ -38,8 +40,8 @@
 
                     <div class="flex flex-col space-y-4">
                         <button type="submit" 
-                            class="w-full py-2 px-4 bg-gradient-to-r from-black to-grey-400 hover:from-cyan-700 hover:to-cyan-500 text-white font-bold rounded-md shadow-lg shadow-white/10 transition-all duration-200 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
-                            {{ __('ACCESS SYSTEM') }}
+                            class="w-full py-2 px-4 border border-solid-1 border-white bg-gradient-to-r from-grey to-grey-200 hover:from-cyan-700 hover:to-cyan-500 text-white font-bold rounded-md shadow-lg shadow-white/20 transition-all duration-200 transform hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-opacity-50">
+                            {{ __('ENTRA') }}
                         </button>
                         
                         {{-- @if (Route::has('register'))
@@ -65,5 +67,6 @@
                     {{ __('One-time token authentication system') }}
                 </p>
             </div>
+        </div>
     </div>
 </x-guest-layout>

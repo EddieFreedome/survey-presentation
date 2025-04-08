@@ -95,7 +95,7 @@
     <div class="cyber-container body-container container mx-auto text-center py-16 px-10 min-h-screen flex flex-col items-center justify-center">
         <div class="container mx-auto flex justify-center">
             <a href="https://bitflow.it">
-                <img src="{{ asset('storage/logo_bitflow_rombo.jpeg') }}" class=" w-full pt-28" alt="Bitflow logo">
+                <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
             </a>
         </div>
         <h1 class="text-4xl pb-10 mt-10 mb-10 text-white">Grazie per aver risposto al questionario!</h1>
