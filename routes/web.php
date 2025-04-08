@@ -16,6 +16,8 @@ use Livewire\Livewire;
 use App\Livewire\TokenLogin;
 use App\Http\Controllers\PreLobbyController;
 
+Route::redirect('/', '/login');
+
 Route::get('/login', [PreLobbyController::class, 'loginView'])->name('login');
 Route::post('/register', [PreLobbyController::class, 'register'])->name('register');
 Route::get('/pre-lobby', [PreLobbyController::class, 'show'])->name('pre-lobby');
