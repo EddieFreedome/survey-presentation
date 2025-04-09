@@ -15,14 +15,13 @@ export default defineConfig({
         manifest: true,
         outDir: 'public/build',
         emptyOutDir: true,
+        manifestFileName: 'manifest.json', // 👈 deve stare QUI
         rollupOptions: {
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
             ],
         },
-        manifestFileName: 'manifest.json', // 👈 questo è il trucco per non usare .vite/
     },
-    
     base: '/build/',
 });
