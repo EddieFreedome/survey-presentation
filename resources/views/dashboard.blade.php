@@ -77,16 +77,14 @@
     </div>
     
     <header class="w-full">
-        <div class="container mx-auto flex justify-center">
-            <a href="https://bitflow.it">
-                <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
-            </a>
+        <div class="container mx-auto flex justify-center px-10">
+            <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28" alt="Bitflow logo">
         </div>
     </header>
     
     <div class="container mx-auto text-center">
     </div>
-    <div class="body-container container mx-auto text-center flex-grow flex flex-col justify-start items-center relative z-10 fade-in p-4 sm:p-8 md:p-10 my-10">
+    <div class="body-container container mx-auto text-center flex-grow flex flex-col justify-start items-center relative z-10 fade-in p-10 sm:p-8 md:p-10 my-10">
         <div class="max-w-2xl cyber-container mx-auto p-6 rounded-lg border border-gray-700">
             <h1 class="text-2xl pb-8 sm:pb-6">Ciao {{ $name }}!</h1>
             <h2 class="text-xl pb-4 sm:pb-6">Il quiz comincera' tra poco, stai pronto a partire!</h2>

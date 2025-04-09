@@ -13,7 +13,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Nunito+Sans:ital,opsz,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/c6b83f6166.js" crossorigin="anonymous"></script>
 
         <style>
             @keyframes float {
@@ -126,8 +125,8 @@
             <div class="floating-star" style="top: 35%; left: 5%; animation-delay: 1.1s;"></div>
         </div>
         
-        <div class="h-screen flex flex-col justify-center items-center py-4 px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="mb-4 transform hover:scale-105 transition-transform duration-300">
+        <div class="h-screen flex flex-col justify-center items-center py-4 px-10 sm:px-6 lg:px-8 relative z-10">
+            <div class="mb-4 px-10 transform hover:scale-105 transition-transform duration-300">
                 <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" class=" w-full pt-28 pb-10" alt="Bitflow logo">
             </div>
 
