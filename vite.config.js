@@ -14,6 +14,10 @@ export default defineConfig({
     build: {
         manifest: true,
         outDir: 'public/build',
+        emptyOutDir: true,
+        rollupOptions: {
+            input: 'resources/js/app.js', // o aggiungi anche app.css qui se serve
+        },
     },
-    base: '/build/', // 👈 Serve per generare URL corretti degli asset
+    base: '/build/',
 });
