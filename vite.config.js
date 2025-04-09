@@ -9,13 +9,12 @@ export default defineConfig({
                 'resources/js/app.js',
             ],
             refresh: true,
+            buildDirectory: 'build', // ✅ questa è quella che cercavi
         }),
     ],
     build: {
-        manifest: true,
         outDir: 'public/build',
         emptyOutDir: true,
-        manifestFileName: 'manifest.json', // 👈 deve stare QUI
         rollupOptions: {
             input: [
                 'resources/css/app.css',
