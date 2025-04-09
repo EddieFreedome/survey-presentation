@@ -36,7 +36,6 @@ class PreLobbyController extends Controller
         $user->login_token = Str::random(32);
         $user->ip_user = request()->ip();
         $user->save();
-        dump('register: ',$user->id);
         
         Cookie::queue('login_token', $user->login_token, 60 * 2);
         // Salva il nome come cookie persistente
@@ -56,8 +55,7 @@ class PreLobbyController extends Controller
         //dall'oggetto $user da logintoken mi arriva solo l'id (il primo valore). Andrebbe corretto ma per il momento uso questo
         $user = User::find($request->userId);
         $userId = $user->id;
-        // dd($user);
-        // dump($user, 'show');
+
         $name = $user->name;
         if (!$user) {
             return redirect()->route('sign-in')->with('error', 'Utente non trovato.');
