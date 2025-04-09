@@ -16,8 +16,13 @@ export default defineConfig({
         outDir: 'public/build',
         emptyOutDir: true,
         rollupOptions: {
-            input: 'resources/js/app.js', // o aggiungi anche app.css qui se serve
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
         },
+        manifestFileName: 'manifest.json', // 👈 questo è il trucco per non usare .vite/
     },
+    
     base: '/build/',
 });
