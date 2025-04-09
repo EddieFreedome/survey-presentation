@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import 'tailwind.css';
+/* @import 'form.css'; 
+@import 'animations.css'; */
 
 /* * {
     font-family: "Junge", cursive;
