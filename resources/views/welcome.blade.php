@@ -843,7 +843,7 @@
     <div class="body-container container mx-auto text-center px-10 ">
         {{-- non loggato --}}
         <div class="img-container flex h-auto justify-center px-4">
-            <x-bitflow-logo />
+            {{-- <x-bitflow-logo /> --}}
         </div>
 
     
