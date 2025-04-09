@@ -108,6 +108,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="michroma-regular antialiased bg-black text-gray-200 h-screen">
+        @include('components.loading-overlay')
         <div class="floating-stars">
             <div class="floating-star" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
             <div class="floating-star" style="top: 40%; left: 70%; animation-delay: 1s;"></div>

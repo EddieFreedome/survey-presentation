@@ -102,7 +102,7 @@
         
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body style="max-height: 100vh" class="flex flex-col bg-black text-gray-200 relative">
+    <body data-disable-loading-overlay="true" style="max-height: 100vh" class="flex flex-col bg-black text-gray-200 relative">
         <header class="py-4">
             <div class="container mx-auto flex justify-center">
                 <img src="{{ asset('storage/logo_bitflow_rombo.png') }}" alt="Bitflow logo" class="w-32 h-auto">
